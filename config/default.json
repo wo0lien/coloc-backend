@@ -10,15 +10,12 @@
     "entity": "user",
     "service": "users",
     "secret": "jZCSi+xiGyUSZteSNGiCz7RIQu0=",
-    "authStrategies": [
-      "jwt",
-      "local"
-    ],
+    "authStrategies": ["jwt", "local"],
     "jwtOptions": {
       "header": {
         "typ": "access"
       },
-      "audience": "https://yourdomain.com",
+      "audience": "",
       "issuer": "feathers",
       "algorithm": "HS256",
       "expiresIn": "1d"
@@ -28,5 +25,5 @@
       "passwordField": "password"
     }
   },
-  "sqlite": "sqlite://back.sqlite"
+  "sqlite": "sqlite://db.sqlite"
 }

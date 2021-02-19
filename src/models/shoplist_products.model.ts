@@ -6,37 +6,16 @@ import { HookReturn } from 'sequelize/types/lib/hooks';
 
 export default function (app: Application): typeof Model {
   const sequelizeClient: Sequelize = app.get('sequelizeClient');
-  const users = sequelizeClient.define('users', {
-
+  const shoplistProducts = sequelizeClient.define('shoplist_products', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    firstname: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    lastname: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    room: {
-      type: DataTypes.SMALLINT,
-      allowNull: false,
-      unique: true,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-
-
+    quantity: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1,
+    }
   }, {
     hooks: {
       beforeCount(options: any): HookReturn {
@@ -46,10 +25,12 @@ export default function (app: Application): typeof Model {
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  (users as any).associate = function (models: any): void {
+  (shoplistProducts as any).associate = function (models: any): void {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
+    shoplistProducts.belongsTo(models.products);
+    shoplistProducts.belongsTo(models.shoplists);
   };
 
-  return users;
+  return shoplistProducts;
 }
