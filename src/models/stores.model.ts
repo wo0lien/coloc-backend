@@ -6,8 +6,8 @@ import { HookReturn } from "sequelize/types/lib/hooks";
 
 export default function (app: Application): typeof Model {
   const sequelizeClient: Sequelize = app.get("sequelizeClient");
-  const products = sequelizeClient.define(
-    "products",
+  const stores = sequelizeClient.define(
+    "stores",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -15,8 +15,11 @@ export default function (app: Application): typeof Model {
         autoIncrement: true,
       },
       name: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
+      },
+      location: {
+        type: DataTypes.GEOMETRY("POINT"),
       },
     },
     {
@@ -29,11 +32,10 @@ export default function (app: Application): typeof Model {
   );
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  (products as any).associate = function (models: any): void {
+  (stores as any).associate = function (models: any): void {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
-    products.belongsTo(models.product_categories);
   };
 
-  return products;
+  return stores;
 }

@@ -1,0 +1,22 @@
+[
+  {
+    "name": "food at netto",
+    "maxPeople": "5",
+    "transportMode": "car",
+    "shoppingDate": "2021-03-12T00:00:00.000Z",
+    "ownerId": "1"
+  },
+  {
+    "name": "food at bonus",
+    "maxPeople": "5",
+    "transportMode": "car",
+    "shoppingDate": "2021-03-12T00:00:00.000Z",
+    "ownerId": "1"
+  },
+  {
+    "name": "food at kronan",
+    "transportMode": "feet",
+    "shoppingDate": "2021-03-12T00:00:00.000Z",
+    "ownerId": "1"
+  }
+]
