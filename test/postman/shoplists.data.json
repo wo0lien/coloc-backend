@@ -1,21 +1,26 @@
 [
   {
-    "name": "food at netto",
+    "name": "netto",
+    "items": 0,
     "maxPeople": "5",
     "transportMode": "car",
+    "storeId": null,
     "shoppingDate": "2021-03-12T00:00:00.000Z",
     "ownerId": "1"
   },
   {
-    "name": "food at bonus",
+    "name": "bonus",
+    "items": 0,
     "maxPeople": "5",
     "transportMode": "car",
+    "storeId": null,
     "shoppingDate": "2021-03-12T00:00:00.000Z",
     "ownerId": "1"
   },
   {
-    "name": "food at kronan",
-    "transportMode": "feet",
+    "name": "kronan",
+    "items": 0,
+    "storeId": null,
     "shoppingDate": "2021-03-12T00:00:00.000Z",
     "ownerId": "1"
   }

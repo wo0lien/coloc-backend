@@ -18,8 +18,11 @@ export default function (app: Application): typeof Model {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      location: {
-        type: DataTypes.GEOMETRY("POINT"),
+      latitude: {
+        type: DataTypes.FLOAT,
+      },
+      longitude: {
+        type: DataTypes.FLOAT,
       },
     },
     {

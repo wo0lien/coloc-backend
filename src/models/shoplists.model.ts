@@ -30,10 +30,6 @@ export default function (app: Application): typeof Model {
         type: DataTypes.STRING,
         defaultValue: "feet",
       },
-      storeId: {
-        type: DataTypes.INTEGER,
-        defaultValue: null,
-      },
       shoppingDate: {
         type: DataTypes.DATEONLY,
       },
@@ -51,8 +47,8 @@ export default function (app: Application): typeof Model {
   (shoplists as any).associate = function (models: any): void {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
-    shoplists.belongsTo(models.users, { foreignKey: "ownerId" });
-    shoplists.belongsTo(models.stores, { foreignKey: "storeId" });
+    shoplists.belongsTo(models.users, { foreignKey: "ownerId", as: "owner" });
+    shoplists.belongsTo(models.stores, { foreignKey: "storeId", as: "store" });
     shoplists.belongsToMany(models.users, { through: "shoplists_joiners", as: "joiners" });
   };
 
