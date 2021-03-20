@@ -32,7 +32,7 @@ export default function (app: Application): typeof Model {
   (shoplistProducts as any).associate = function (models: any): void {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
-    shoplistProducts.belongsTo(models.products, { foreignKey: "productId" });
+    shoplistProducts.belongsTo(models.products, { as: "product" });
     shoplistProducts.belongsTo(models.shoplists, { foreignKey: "shoplistId" });
     shoplistProducts.belongsTo(models.users, { foreignKey: "userId" });
   };

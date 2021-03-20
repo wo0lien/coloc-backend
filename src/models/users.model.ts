@@ -38,7 +38,7 @@ export default function (app: Application): typeof Model {
       },
       avatar: {
         type: DataTypes.STRING,
-      }
+      },
     },
     {
       hooks: {
@@ -53,7 +53,11 @@ export default function (app: Application): typeof Model {
   (users as any).associate = function (models: any): void {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
-    users.belongsToMany(models.users, { through: "shoplists_joiners", as: "foreignShoplists" });
+    users.belongsToMany(models.shoplists, {
+      through: "shoplists_joiners",
+      as: "foreignShoplists",
+      foreignKey: "foreignShoplistsId",
+    });
   };
 
   return users;

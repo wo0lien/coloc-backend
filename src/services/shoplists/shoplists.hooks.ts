@@ -10,7 +10,12 @@ export default {
     all: [authenticate("jwt")],
     find: [
       addAssociations({
-        models: [{ model: "users", as: "owner" }],
+        models: [
+          { model: "users", as: "owner" },
+          { model: "stores", as: "store" },
+          { model: "users", as: "joiners" },
+          { model: "shoplist-products", as: "products", include: [{ model: "products", as: "product" }] },
+        ],
       }),
     ],
     get: [],

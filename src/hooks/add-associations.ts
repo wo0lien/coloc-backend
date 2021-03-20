@@ -11,16 +11,7 @@ export default (options: { models: Array<any> | undefined }): Hook => {
     const sequelize = context.params.sequelize || {};
     const include = sequelize.include || [];
 
-    // sequelize.include = include.concat(
-    //   options.models!.map((model) => {
-    //     const newModel = { ...model };
-
-    //     newModel.model = context.app.services[model.model].Model;
-    //     return newModel;
-    //   }),
-    // );
-
-    sequelize.include = { all: true };
+    sequelize.include = includeConcat(sequelize.include, include, context, options.models);
 
     sequelize.raw = false;
 
@@ -28,3 +19,22 @@ export default (options: { models: Array<any> | undefined }): Hook => {
     return context;
   };
 };
+
+// Recursive include function
+function includeConcat(target: any, source: any, context: HookContext, models: any): any {
+  target = source.concat(
+    models
+      .filter((model: any) => {
+        return context.app.services[model.model];
+      })
+      .map((model: any) => {
+        let newModel = { ...model, attributes: { exclude: ["createdAt", "updatedAt", "password"] } };
+        if (model.include) {
+          newModel.include = includeConcat(newModel.include, [], context, model.include);
+        }
+        newModel.model = context.app.services[model.model].Model;
+        return newModel;
+      }),
+  );
+  return target;
+}
