@@ -1,23 +1,75 @@
+import { Id, NullableId, Paginated, Params, ServiceMethods } from "@feathersjs/feathers";
+import { Application } from "../../declarations";
 import { BadRequest } from "@feathersjs/errors";
-import { Params } from "@feathersjs/feathers";
+import { Users } from "../users/users.class";
+import { Shoplists } from "../shoplists/shoplists.class";
 
-export class ShoplistsJoiners {
-  private models: any;
+interface Data {}
 
-  constructor(models: any) {
-    this.models = models || {};
+interface ServiceOptions {
+  users: Users;
+  shoplists: Shoplists;
+}
+
+export class ShoplistsJoiners implements ServiceMethods<Data> {
+  app: Application;
+  options: ServiceOptions;
+
+  constructor(options: ServiceOptions, app: Application) {
+    this.options = options;
+    this.app = app;
   }
 
-  create(data: { shoplistId: number; joinerId: number }, params?: Params) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async find(params?: Params): Promise<Data[] | Paginated<Data>> {
+    return [];
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async get(id: Id, params?: Params): Promise<Data> {
+    return {
+      id,
+      text: `A new message with ID: ${id}!`,
+    };
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async create(data: { shoplistId: number; joinerId: number }, params?: Params) {
     if (isNaN(data.shoplistId)) {
       throw new BadRequest("Expected Number");
     } else if (isNaN(data.joinerId)) {
       throw new BadRequest("Expected Number");
     }
-    return this.models.users
-      .get(data.joinerId)
-      .then((joiner: any) =>
-        this.models.shoplists.get(data.joinerId).then((shoplist: any) => shoplist.addJoiners(joiner)),
-      );
+
+    this.options.shoplists.Model.findByPk(data.shoplistId)
+      .then((s: any) => {
+        this.options.users.Model.findByPk(data.joinerId)
+          .then((j: any) => {
+            s.addJoiner(j);
+          })
+          .catch((err: any) => {
+            throw new BadRequest("Arguments does not match database entry.");
+          });
+      })
+      .catch((err: any) => {
+        throw new BadRequest("Arguments does not match database entry.");
+      });
+
+    return data;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async update(id: NullableId, data: Data, params?: Params): Promise<Data> {
+    return data;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async patch(id: NullableId, data: Data, params?: Params): Promise<Data> {
+    return data;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async remove(id: NullableId, params?: Params): Promise<Data> {
+    return { id };
   }
 }

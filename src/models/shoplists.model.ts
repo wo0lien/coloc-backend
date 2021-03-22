@@ -49,7 +49,7 @@ export default function (app: Application): typeof Model {
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
     shoplists.belongsTo(models.users, { as: "owner" });
     shoplists.belongsTo(models.stores, { as: "store" });
-    shoplists.belongsToMany(models.users, { through: "shoplists_joiners", as: "joiners", foreignKey: "joinersId" });
+    shoplists.belongsToMany(models.users, { through: "shoplists_joiners", as: "joiners", foreignKey: "joinerId" });
     shoplists.hasMany(models.shoplist_products, { as: "products" });
   };
 

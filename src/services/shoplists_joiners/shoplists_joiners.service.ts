@@ -12,14 +12,14 @@ declare module "../../declarations" {
 }
 
 export default function (app: Application): void {
+  const options = {
+    paginate: app.get("paginate"),
+    users: app.service("users"),
+    shoplists: app.service("shoplists"),
+  };
+
   // Initialize our service with any options it requires
-  app.use(
-    "/addJoinerToShoplist",
-    new ShoplistsJoiners({
-      users: app.service("users"),
-      shoplists: app.service("shoplists"),
-    }),
-  );
+  app.use("/shoplists-joiners", new ShoplistsJoiners(options, app));
 
   // Get our initialized service so that we can register hooks
   const service = app.service("shoplists-joiners");
