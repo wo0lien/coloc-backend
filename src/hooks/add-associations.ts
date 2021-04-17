@@ -28,7 +28,7 @@ function includeConcat(target: any, source: any, context: HookContext, models: a
         return context.app.services[model.model];
       })
       .map((model: any) => {
-        let newModel = { ...model, attributes: { exclude: ["createdAt", "updatedAt", "password"] } };
+        const newModel = { ...model, attributes: { exclude: ["createdAt", "updatedAt", "password"] } };
         if (model.include) {
           newModel.include = includeConcat(newModel.include, [], context, model.include);
         }

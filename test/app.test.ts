@@ -32,6 +32,7 @@ describe("Feathers application tests (with jest)", () => {
 
     const { data } = await axios.get(getUrl());
 
+    // eslint-disable-next-line quotes
     expect(data.indexOf('<html lang="en">')).not.toBe(-1);
   });
 
