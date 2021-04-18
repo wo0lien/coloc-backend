@@ -4,6 +4,7 @@ module.exports = {
   globals: {
     "ts-jest": {
       diagnostics: false,
+      compiler: "ttypescript",
     },
   },
   coverageThreshold: {
@@ -14,5 +15,7 @@ module.exports = {
       statements: 50,
     },
   },
-  coverageReporters: ["json", "lcov"],
+  coverageReporters: ["text", "lcov"],
+  setupFilesAfterEnv: ["jest-extended"],
+  setupFiles: ["<rootDir>/config.test.d.ts"],
 };

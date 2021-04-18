@@ -5,9 +5,13 @@
     "outDir": "./lib",
     "rootDir": "./src",
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "plugins": [
+      { "transform": "ts-auto-mock/transformer", "cacheBetweenTests": false }
+    ]
   },
   "exclude": [
-    "test"
+    "test",
+    "node_modules"
   ]
 }

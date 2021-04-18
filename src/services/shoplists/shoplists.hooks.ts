@@ -1,5 +1,4 @@
 import * as authentication from "@feathersjs/authentication";
-import { add } from "winston";
 import addAssociations from "../../hooks/add-associations";
 // Don't remove this comment. It's needed to format import lines nicely.
 
