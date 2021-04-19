@@ -7,7 +7,7 @@ import "jest-extended";
 describe("add-association", () => {
   // import hook
   describe("includeConcat", () => {
-    it("should return an empty array from empty source, target ", () => {
+    it("should return an empty array from empty source and target ", () => {
       const input: Array<any> = [];
       const output = testable.includeConcat([], app, input);
       expect(output).toBeInstanceOf(Array);
@@ -47,21 +47,17 @@ describe("add-association", () => {
 
   describe("addAssociation", () => {
     it("should wrap the output of mocked includeConcat function", async () => {
-      // let ctx: HookContext = {
-      //   params:
-      // };
       const input = { models: [] };
-      // const output: Hook = addAssociations(input);
-      // console.log(output(ctx));
       const mockCtx = createMock<HookContext>();
       const includeConcatMock = jest.fn(() => {
-        return ["Hello"];
+        return [];
       });
 
       testable.includeConcat = includeConcatMock;
       const ctx = await addAssociations(input)(mockCtx);
       if (ctx) {
-        expect(ctx.params.sequelize.include).toEqual(["Hello"]);
+        expect(ctx.params.sequelize.include).toEqual([]);
+        expect(includeConcatMock.mock.calls.length).toBe(1);
       } else {
         fail();
       }

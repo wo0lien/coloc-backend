@@ -9,13 +9,14 @@ module.exports = {
   },
   coverageThreshold: {
     global: {
-      branches: 50,
-      functions: 50,
-      lines: 50,
-      statements: 50,
+      branches: 80,
+      functions: 95,
+      lines: 80,
+      statements: 80,
     },
   },
-  coverageReporters: ["text", "lcov"],
+  coverageReporters: ["text-summary", "lcov"],
   setupFilesAfterEnv: ["jest-extended"],
   setupFiles: ["<rootDir>/config.test.d.ts"],
+  testMatch: ["**/*.steps.ts", "**/*.test.ts"],
 };

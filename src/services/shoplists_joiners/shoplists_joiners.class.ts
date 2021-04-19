@@ -1,8 +1,8 @@
 import { Id, NullableId, Paginated, Params, ServiceMethods } from "@feathersjs/feathers";
 import { Application } from "../../declarations";
-import { BadRequest } from "@feathersjs/errors";
 import { Users } from "../users/users.class";
 import { Shoplists } from "../shoplists/shoplists.class";
+import { BadRequest } from "@feathersjs/errors";
 
 interface Data {}
 
@@ -33,29 +33,17 @@ export class ShoplistsJoiners implements ServiceMethods<Data> {
     };
   }
 
+  // TODO refactor with better Promise understanding
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async create(data: { shoplistId: number; joinerId: number }, params?: Params) {
-    if (isNaN(data.shoplistId)) {
-      throw new BadRequest("Expected Number");
-    } else if (isNaN(data.joinerId)) {
-      throw new BadRequest("Expected Number");
+  async create(data: { shoplistId: number; joinerId: number }, params?: Params): Promise<any> {
+    try {
+      const s = await this.options.shoplists.Model.findByPk(data.shoplistId);
+      const j = await this.options.users.Model.findByPk(data.joinerId);
+      await s.addJoiner(j);
+      return data;
+    } catch (err) {
+      throw new BadRequest("Arguments does not match the database entries");
     }
-
-    this.options.shoplists.Model.findByPk(data.shoplistId)
-      .then((s: any) => {
-        this.options.users.Model.findByPk(data.joinerId)
-          .then((j: any) => {
-            s.addJoiner(j);
-          })
-          .catch((err: any) => {
-            throw new BadRequest("Arguments does not match database entry.");
-          });
-      })
-      .catch((err: any) => {
-        throw new BadRequest("Arguments does not match database entry.");
-      });
-
-    return data;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
