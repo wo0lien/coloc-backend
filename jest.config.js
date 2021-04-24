@@ -18,5 +18,5 @@ module.exports = {
   coverageReporters: ["text-summary", "lcov"],
   setupFilesAfterEnv: ["jest-extended"],
   setupFiles: ["<rootDir>/config.test.d.ts"],
-  testMatch: ["**/*.steps.ts", "**/*.test.ts"],
+  testMatch: ["**/*.test.ts"],
 };
